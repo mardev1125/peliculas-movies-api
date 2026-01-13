@@ -1,26 +1,26 @@
-server:
-  port: 8081
-
-spring:
+﻿spring:
   application:
-    name: microservicio-peliculas
+    name: movies-api
   datasource:
-    url: jdbc:sqlserver://localhost:1434;databaseName=CineDb;encrypt=false;trustServerCertificate=true
-    username: sa
-    password: 1125
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/cinedb}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: none
-    show-sql: true
+      ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+    show-sql: true
+
+server:
+  port: ${SERVER_PORT:8081}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
   instance:
     prefer-ip-address: true
